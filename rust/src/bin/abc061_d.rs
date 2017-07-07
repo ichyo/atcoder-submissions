@@ -1,12 +1,36 @@
-fn main() {
-    let (a, b, c): (i32, i32, i32) = readln();
-    let x = a * 100 + b * 10 + c;
-    let ans = match x % 4 {
-        0 => "YES",
-        _ => "NO"
-    };
-    println!("{}", ans);
+fn solve() -> String {
+    let (n, m) = readln();
+    let mut g = vec![Vec::new(); n];
+    for _ in 0..m {
+        let (a, b, c): (usize, usize, i64) = readln();
+        g[a-1].push((b-1, -c));
+    }
+    let mut cost = vec![None; n];
+    cost[0] = Some(0);
+    for i in 0..n {
+        for u in 0..n {
+            if let Some(cur) = cost[u] {
+                for &(v, c) in &g[u] {
+                    let next = cur + c;
+                    if cost[v].unwrap_or(i64::max_value()) > next && i == n-1 && v == n-1 {
+                        return "inf".to_string();
+                    }
+                    cost[v] = Some(cost[v].map_or(next, |x| min(x, next)));
+                }
+            }
+        }
+    }
+    (-(cost[n-1].unwrap())).to_string()
 }
+fn main() {
+    println!("{}", solve());
+}
+
+// --- template ---
+#[allow(unused_imports)]
+use std::cmp::{max, min};
+#[allow(unused_imports)]
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

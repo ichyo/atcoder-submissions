@@ -4,9 +4,9 @@ fn main() {
     println!("{}", ans);
 }
 
+// --- template ---
 use std::cmp::{max, min};
 
-// --- template ---
 pub trait FromLn {
     fn fromln(s: &str) -> Self;
 }
