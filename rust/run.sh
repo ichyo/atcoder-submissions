@@ -14,7 +14,7 @@ fi
 
 ARG=$1
 
-if ! [[ $ARG =~ ^(arc|abc)[0-9]{3}_[abcd]$ ]]; then
+if ! [[ $ARG =~ ^(arc|abc|agc)[0-9]{3}_[abcd]$ ]]; then
     usage
 fi
 
@@ -35,8 +35,8 @@ for file in $(find ./resource/$ARG/input/ -type f); do
 done
 
 if [ $FAILED == 0 ]; then
-    cat ./src/bin/$ARG.rs | pbcopy
-    DOMAIN=$(echo $ARG | cut -d '_' -f 1).contest.atcoder.jp
-    URL=http://$DOMAIN/submit
-    open $URL
+    cat ./src/bin/$ARG.rs | xclip -selection clipboard
+    CONTEST=$(echo $ARG | cut -d '_' -f 1)
+    URL="https://beta.atcoder.jp/contests/$CONTEST/submit?taskScreenName=$ARG"
+    python -m webbrowser -t "$URL"
 fi
