@@ -1,10 +1,28 @@
-fn main() {}
+fn calc(mut x: i32) -> i32 {
+    let mut s = 0;
+    while x > 0 {
+        s += x % 10;
+        x /= 10;
+    }
+    s
+}
+fn main() {
+    let (n, a, b): (i32, i32, i32) = readln();
+    let mut ans = 0;
+    for x in 1..n + 1 {
+        let c = calc(x);
+        if a <= c && c <= b {
+            ans += x;
+        }
+    }
+    println!("{}", ans);
+}
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

@@ -1,4 +1,13 @@
-fn main() {}
+fn main() {
+    let n: usize = readln();
+    let a: Vec<i64> = readln();
+    let b: Vec<i64> = readln();
+    let ans = (0..n)
+        .map(|i| a[0..i + 1].iter().sum::<i64>() + b[i..n].iter().sum::<i64>())
+        .max()
+        .unwrap();
+    println!("{}", ans);
+}
 
 // --- template ---
 #[allow(unused_imports)]

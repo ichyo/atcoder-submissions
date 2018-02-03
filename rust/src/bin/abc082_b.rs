@@ -1,10 +1,21 @@
-fn main() {}
+fn main() {
+    let mut s: Vec<char> = readln();
+    let mut t: Vec<char> = readln();
+    s.sort();
+    t.sort();
+    t.reverse();
+    if s < t {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
+}
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

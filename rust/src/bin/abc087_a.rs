@@ -1,4 +1,11 @@
-fn main() {}
+fn main() {
+    let mut x: i64 = readln();
+    let a: i64 = readln();
+    let b: i64 = readln();
+    x -= a;
+    x %= b;
+    println!("{}", x);
+}
 
 // --- template ---
 #[allow(unused_imports)]

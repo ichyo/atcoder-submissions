@@ -1,4 +1,21 @@
-fn main() {}
+fn main() {
+    let _: i64 = readln();
+    let a: Vec<i64> = readln();
+    let mut m = HashMap::new();
+    for &x in &a {
+        let counter = m.entry(x).or_insert(0);
+        *counter += 1;
+    }
+    let mut ans = 0;
+    for (k, v) in &m {
+        if k <= v {
+            ans += *v - k;
+        } else {
+            ans += *v;
+        }
+    }
+    println!("{}", ans);
+}
 
 // --- template ---
 #[allow(unused_imports)]

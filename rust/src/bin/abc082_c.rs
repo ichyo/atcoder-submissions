@@ -1,10 +1,13 @@
-fn main() {}
+fn main() {
+    let N = readln();
+    let a: Vec<i64> = readln();
+}
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

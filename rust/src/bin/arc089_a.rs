@@ -1,10 +1,32 @@
-fn main() {}
+fn solve() -> &'static str {
+    let n = readln();
+    let mut t = 0;
+    let mut p = (0, 0);
+    for _ in 0..n {
+        let (nt, nx, ny): (i64, i64, i64) = readln();
+        let (x, y) = p;
+        let d = (nx - x).abs() + (ny - y).abs();
+        let l = (nt - t);
+        if d > l {
+            return "No";
+        }
+        let rest = l - d;
+        if rest % 2 != 0 {
+            return "No";
+        }
+    }
+    "Yes"
+}
+fn main() {
+    let ans = solve();
+    println!("{}", ans);
+}
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

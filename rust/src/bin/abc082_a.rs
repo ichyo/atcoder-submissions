@@ -1,10 +1,15 @@
-fn main() {}
+fn main() {
+    let (a, b): (i64, i64) = readln();
+    let c = (a as f64 + b as f64 + 1.0) / 2.0;
+    let x = c as i64;
+    println!("{}", x);
+}
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

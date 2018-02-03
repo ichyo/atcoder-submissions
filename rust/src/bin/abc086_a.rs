@@ -1,10 +1,19 @@
-fn main() {}
+fn main() {
+    let (a, b): (u64, u64) = readln();
+    let c: u64 = a * b;
+    let ans = match c % 2 {
+        0 => "Even",
+        1 => "Odd",
+        _ => unreachable!(),
+    };
+    println!("{}", ans);
+}
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

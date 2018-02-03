@@ -1,10 +1,11 @@
-fn main() {}
+fn main() {
+}
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;
@@ -16,9 +17,7 @@ pub fn readln<T: FromLn>() -> T {
 }
 pub fn readlns<T: FromLn>(n: usize) -> Vec<T> {
     let mut vs = vec![];
-    for _ in 0..n {
-        vs.push(readln());
-    }
+    for _ in 0..n { vs.push(readln()); }
     vs
 }
 macro_rules! fromln_primitives {
@@ -30,26 +29,8 @@ macro_rules! fromln_primitives {
         }
     )* }
 }
-fromln_primitives!(
-    String,
-    bool,
-    f32,
-    f64,
-    isize,
-    i8,
-    i16,
-    i32,
-    i64,
-    usize,
-    u8,
-    u16,
-    u32,
-    u64
-);
-impl<T> FromLn for Vec<T>
-where
-    T: FromLn,
-{
+fromln_primitives!(String, bool, f32, f64, isize, i8, i16, i32, i64, usize, u8, u16, u32, u64);
+impl<T> FromLn for Vec<T> where T: FromLn {
     fn fromln(s: &str) -> Vec<T> {
         s.split_whitespace().map(T::fromln).collect()
     }

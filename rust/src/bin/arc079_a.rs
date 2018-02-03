@@ -1,4 +1,17 @@
-fn main() {}
+fn main() {
+    let (n, m): (usize, usize) = readln();
+    let mut graph = vec![Vec::new(); n];
+    let edges: Vec<(usize, usize)> = readln();
+    for (mut a, mut b) in edges {
+        a -= 1;
+        b -= 1;
+        graph[a].push(b);
+        graph[b].push(a);
+    }
+
+    let mut used = vec![false; n];
+    let mut queuess
+}
 
 // --- template ---
 #[allow(unused_imports)]

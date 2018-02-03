@@ -1,4 +1,21 @@
-fn main() {}
+fn main() {
+    let a: i64 = readln();
+    let b: i64 = readln();
+    let c: i64 = readln();
+    let s: i64 = readln();
+    let mut answer = 0;
+    for a500 in (0..a + 1) {
+        for a100 in (0..b + 1) {
+            for a50 in (0..c + 1) {
+                let x = a500 * 500 + a100 * 100 + a50 * 50;
+                if x == s {
+                    answer += 1;
+                }
+            }
+        }
+    }
+    println!("{}", answer);
+}
 
 // --- template ---
 #[allow(unused_imports)]

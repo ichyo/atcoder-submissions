@@ -1,4 +1,15 @@
-fn main() {}
+fn main() {
+    let _: i32 = readln();
+    let a: Vec<i64> = readln();
+    let mut c: HashMap<i64, i64> = HashMap::new();
+    for &x in &a {
+        *c.entry(x).or_insert(0) += 1;
+        *c.entry(x - 1).or_insert(0) += 1;
+        *c.entry(x + 1).or_insert(0) += 1;
+    }
+    let answer = c.into_iter().map(|(_, v)| v).max().unwrap();
+    println!("{}", answer);
+}
 
 // --- template ---
 #[allow(unused_imports)]

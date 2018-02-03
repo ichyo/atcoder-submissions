@@ -1,10 +1,20 @@
-fn main() {}
+fn main() {
+    let (a, b): (String, String) = readln();
+    let c = a + &b;
+    let x = c.parse::<i64>().unwrap();
+    let y = (x as f64).sqrt() as i64;
+    if y * y == x {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
+}
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

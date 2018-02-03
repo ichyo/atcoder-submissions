@@ -1,4 +1,25 @@
-fn main() {}
+fn main() {
+    let n: usize = readln();
+    let a: Vec<i64> = readln();
+    let mut c = HashMap::new();
+    for &x in &a {
+        *c.entry(x).or_insert(0) += 1;
+    }
+    let mut b: Vec<i64> = Vec::new();
+    for (k, mut v) in c {
+        while v >= 2 {
+            b.push(k);
+            v -= 2;
+        }
+    }
+    b.sort();
+    b.reverse();
+    if b.len() >= 2 {
+        println!("{}", b[0] * b[1]);
+    } else {
+        println!("{}", 0);
+    }
+}
 
 // --- template ---
 #[allow(unused_imports)]
