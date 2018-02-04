@@ -1,31 +1,36 @@
-fn main() {
-    let (n, m): (usize, usize) = readln();
-
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
-
-    let edges: Vec<(usize, usize)> = readlns(m);
-
-    for &(mut a, mut b) in &edges {
-        a -= 1;
-        b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
+fn dfs(x: &Vec<i32>, i: usize, s: i32, res: String) -> Option<String> {
+    if i == x.len() {
+        if s == 7 {
+            return Some(res + "=7");
+        } else {
+            return None;
         }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
-        }
-    }
-
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
     } else {
-        println!("IMPOSSIBLE");
+        {
+            let mut ns = res.clone();
+            ns += "+";
+            ns += &x[i].to_string();
+            if let Some(r) = dfs(x, i + 1, s + x[i], ns) {
+                return Some(r);
+            }
+        }
+        {
+            let mut ns = res.clone();
+            ns += "-";
+            ns += &x[i].to_string();
+            if let Some(r) = dfs(x, i + 1, s - x[i], ns) {
+                return Some(r);
+            }
+        }
     }
+    None
+}
+fn main() {
+    let s: Vec<char> = readln();
+    let x: Vec<i32> = s.iter().map(|&x| (x as u8 - '0' as u8) as i32).collect();
+
+    let ans = dfs(&x, 1, x[0], x[0].to_string()).unwrap();
+    println!("{}", ans);
 }
 
 // --- template ---

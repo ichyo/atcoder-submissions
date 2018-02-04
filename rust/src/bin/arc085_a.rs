@@ -1,31 +1,8 @@
 fn main() {
     let (n, m): (usize, usize) = readln();
-
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
-
-    let edges: Vec<(usize, usize)> = readlns(m);
-
-    for &(mut a, mut b) in &edges {
-        a -= 1;
-        b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
-        }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
-        }
-    }
-
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
-    } else {
-        println!("IMPOSSIBLE");
-    }
+    let k = 1 << m;
+    let unit = 1900 * m + 100 * (n - m);
+    println!("{}", unit * k);
 }
 
 // --- template ---

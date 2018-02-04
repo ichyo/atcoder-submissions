@@ -1,31 +1,20 @@
 fn main() {
-    let (n, m): (usize, usize) = readln();
-
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
-
-    let edges: Vec<(usize, usize)> = readlns(m);
-
-    for &(mut a, mut b) in &edges {
-        a -= 1;
-        b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
-        }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
+    let s: Vec<char> = "AKIHABARA".chars().collect();
+    let t: Vec<char> = readln();
+    let mut dp = [[false; 51]; 51];
+    dp[0][0] = true;
+    for i in 0..s.len() {
+        for j in 0..(t.len() + 1) {
+            if dp[i][j] && j < t.len() && s[i] == t[j] {
+                dp[i + 1][j + 1] = true;
+            }
+            if dp[i][j] && s[i] == 'A' {
+                dp[i + 1][j] = true;
+            }
         }
     }
-
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
-    } else {
-        println!("IMPOSSIBLE");
-    }
+    let ans = if dp[s.len()][t.len()] { "YES" } else { "NO" };
+    println!("{}", ans);
 }
 
 // --- template ---

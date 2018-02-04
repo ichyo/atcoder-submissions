@@ -1,38 +1,31 @@
 fn main() {
-    let (n, m): (usize, usize) = readln();
+    let (mut q, mut h, mut s, mut d): (i64, i64, i64, i64) = readln();
+    h = min(h, q * 2);
+    s = min(s, h * 2);
+    d = min(d, s * 2);
 
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
+    let mut n: i64 = readln();
 
-    let edges: Vec<(usize, usize)> = readlns(m);
+    n *= 4;
 
-    for &(mut a, mut b) in &edges {
-        a -= 1;
-        b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
-        }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
-        }
-    }
+    let mut answer = 0;
 
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
-    } else {
-        println!("IMPOSSIBLE");
-    }
+    answer += d * (n / 8);
+    n %= 8;
+    answer += s * (n / 4);
+    n %= 4;
+    answer += s * (n / 2);
+    n %= 2;
+    answer += q * n;
+
+    println!("{}", answer);
 }
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap, HashSet, VecDeque};
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;

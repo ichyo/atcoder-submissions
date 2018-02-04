@@ -1,31 +1,31 @@
+fn calc(s: &Vec<char>, t: &Vec<char>, base: usize) -> Option<String> {
+    let mut ns = s.clone();
+    for i in 0..t.len() {
+        if s[i + base] != '?' && s[i + base] != t[i] {
+            return None;
+        }
+    }
+    for i in 0..t.len() {
+        if ns[i + base] == '?' {
+            ns[i + base] = t[i];
+        }
+    }
+    for i in 0..ns.len() {
+        if ns[i] == '?' {
+            ns[i] = 'a';
+        }
+    }
+    Some(ns.into_iter().collect::<String>())
+}
 fn main() {
-    let (n, m): (usize, usize) = readln();
-
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
-
-    let edges: Vec<(usize, usize)> = readlns(m);
-
-    for &(mut a, mut b) in &edges {
-        a -= 1;
-        b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
-        }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
-        }
-    }
-
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
-    } else {
-        println!("IMPOSSIBLE");
-    }
+    let s: Vec<char> = readln();
+    let t: Vec<char> = readln();
+    let n = (s.len() - t.len() + 1);
+    let ans = (0..n)
+        .filter_map(|i| calc(&s, &t, i))
+        .min()
+        .unwrap_or("UNRESTORABLE".to_string());
+    println!("{}", ans);
 }
 
 // --- template ---

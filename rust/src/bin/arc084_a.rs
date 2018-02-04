@@ -1,31 +1,30 @@
+fn calc(a: &Vec<i64>, b: &Vec<i64>, t: &Vec<i64>) -> Vec<i64> {
+    let n = a.len();
+    let mut res = vec![0; n + 1];
+    let mut ways = 0;
+    let mut idx = n;
+    for i in (0..n).rev() {
+        while idx != 0 && b[idx - 1] > a[i] {
+            idx -= 1;
+            ways += t[idx];
+        }
+        res[i] = ways;
+    }
+    res
+}
 fn main() {
-    let (n, m): (usize, usize) = readln();
-
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
-
-    let edges: Vec<(usize, usize)> = readlns(m);
-
-    for &(mut a, mut b) in &edges {
-        a -= 1;
-        b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
-        }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
-        }
-    }
-
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
-    } else {
-        println!("IMPOSSIBLE");
-    }
+    let n: usize = readln();
+    let mut a: Vec<i64> = readln();
+    a.sort();
+    let mut b: Vec<i64> = readln();
+    b.sort();
+    let mut c: Vec<i64> = readln();
+    c.sort();
+    let r = vec![1; n + 1];
+    let q = calc(&b, &c, &r);
+    let p = calc(&a, &b, &q);
+    let ans = p.iter().sum::<i64>();
+    println!("{}", ans);
 }
 
 // --- template ---

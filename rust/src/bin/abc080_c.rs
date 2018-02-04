@@ -1,31 +1,29 @@
 fn main() {
-    let (n, m): (usize, usize) = readln();
-
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
-
-    let edges: Vec<(usize, usize)> = readlns(m);
-
-    for &(mut a, mut b) in &edges {
-        a -= 1;
-        b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
-        }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
-        }
+    let n: usize = readln();
+    let mut opens = Vec::new();
+    for i in 0..n {
+        let v: Vec<i32> = readln();
+        let open = v.into_iter().fold(0, |acc, x| (acc << 1) | x);
+        opens.push(open);
     }
 
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
-    } else {
-        println!("IMPOSSIBLE");
-    }
+    let costs: Vec<Vec<i64>> = readlns(n);
+
+    let ans = (1..(1 << 10))
+        .map(|s| {
+            opens
+                .iter()
+                .zip(costs.iter())
+                .map(|(o, c)| {
+                    let i = (s & o).count_ones() as usize;
+                    c[i]
+                })
+                .sum::<i64>()
+        })
+        .max()
+        .unwrap();
+
+    println!("{}", ans);
 }
 
 // --- template ---

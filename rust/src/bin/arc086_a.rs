@@ -1,31 +1,15 @@
 fn main() {
-    let (n, m): (usize, usize) = readln();
-
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
-
-    let edges: Vec<(usize, usize)> = readlns(m);
-
-    for &(mut a, mut b) in &edges {
-        a -= 1;
-        b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
-        }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
-        }
+    let (n, k): (usize, usize) = readln();
+    let mut c: HashMap<i64, usize> = HashMap::new();
+    let a: Vec<i64> = readln();
+    for &x in &a {
+        *c.entry(x).or_insert(0) += 1;
     }
-
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
-    } else {
-        println!("IMPOSSIBLE");
-    }
+    let mut kv = c.into_iter().map(|(k, v)| v).collect::<Vec<_>>();
+    kv.sort();
+    kv.reverse();
+    let ans: usize = n - kv.into_iter().take(k).sum::<usize>();
+    println!("{}", ans);
 }
 
 // --- template ---

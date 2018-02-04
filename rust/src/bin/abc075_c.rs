@@ -1,38 +1,51 @@
+fn is_connect(graph: &Vec<Vec<usize>>, a: usize, b: usize) -> bool {
+    let n = graph.len();
+    let mut queue = VecDeque::new();
+    let mut used = vec![false; n];
+    queue.push_back(0);
+    used[0] = true;
+    while let Some(cur) = queue.pop_front() {
+        for &next in &graph[cur] {
+            if (a, b) == (cur, next) || (b, a) == (cur, next) {
+                continue;
+            }
+            if used[next] {
+                continue;
+            }
+            used[next] = true;
+            queue.push_back(next);
+        }
+    }
+    used.into_iter().all(|b| b)
+}
+
 fn main() {
     let (n, m): (usize, usize) = readln();
-
-    let mut cf = vec![false; n];
-    let mut ce = vec![false; n];
-
-    let edges: Vec<(usize, usize)> = readlns(m);
-
-    for &(mut a, mut b) in &edges {
+    let mut graph = vec![Vec::new(); n];
+    for i in 0..m {
+        let (mut a, mut b): (usize, usize) = readln();
         a -= 1;
         b -= 1;
-        if a > b {
-            std::mem::swap(&mut a, &mut b);
-        }
-        if a == 0 {
-            cf[b] = true;
-        }
-        if b == n - 1 {
-            ce[a] = true;
-        }
+        graph[a].push(b);
+        graph[b].push(a);
     }
 
-    let ans = (0..n).any(|i| cf[i] && ce[i]);
-    if ans {
-        println!("POSSIBLE");
-    } else {
-        println!("IMPOSSIBLE");
+    let mut answer = 0;
+    for u in 0..n {
+        for &v in &graph[u] {
+            if u < v && !is_connect(&graph, u, v) {
+                answer += 1;
+            }
+        }
     }
+    println!("{}", answer);
 }
 
 // --- template ---
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 #[allow(unused_imports)]
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap, HashSet, VecDeque};
 
 pub trait FromLn {
     fn fromln(s: &str) -> Self;
