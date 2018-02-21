@@ -14,10 +14,6 @@ fi
 
 ARG=$1
 
-if ! [[ $ARG =~ ^(arc|abc|agc)[0-9]{3}_[abcd]$ ]]; then
-    usage
-fi
-
 cargo build --bin $ARG
 
 FAILED=0
@@ -31,7 +27,7 @@ for file in $(find ./resource/$ARG/input/ -type f); do
     INPUT="./resource/$ARG/input/$IDX"
     OUTPUT="./resource/$ARG/output/$IDX"
     echo " --- Case $IDX --- "
-    (./target/debug/$ARG < $INPUT | diff - $OUTPUT && echo "OK") || failed
+    (./target/release/$ARG < $INPUT | diff - $OUTPUT && echo "OK") || failed
 done
 
 if [ $FAILED == 0 ]; then
