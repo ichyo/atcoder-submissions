@@ -3,6 +3,8 @@
 set -eu
 shopt -s nullglob
 
+REMOVE_DEAD=true
+
 function usage {
     echo "Example: ./run.sh arc075_a"
     exit 1
@@ -31,7 +33,12 @@ for file in $(find ./resource/$ARG/input/ -type f | sort); do
 done
 
 if [ $FAILED == 0 ]; then
-    cat ./src/bin/$ARG.rs | xclip -selection clipboard
+    if [ $REMOVE_DEAD = 'true' ]; then
+        cargo +1.21.0 check --bin $ARG --message-format=json | cargo script remove_dead.rs ./src/bin/$ARG.rs | rustfmt | xclip -selection clipboard
+    else
+        cat ./src/bin/$ARG.rs | xclip -selection clipboard
+    fi
+
     CONTEST=$(echo $ARG | cut -d '_' -f 1)
     URL="https://beta.atcoder.jp/contests/$CONTEST/submit?taskScreenName=$ARG"
     python -m webbrowser -t "$URL"
